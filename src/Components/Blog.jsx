@@ -35,27 +35,33 @@ const Blog = () => {
       <div className="ldiv">
         <h1>Maple Blogs</h1>
 
-        <div className="main-blog">
-          {!selectedPost ? (
-            <h1>{data && data[0].title}</h1>
-          ) : (
-            <h1>{selectedPost?.title}</h1>
-          )}
-          {!selectedPost ? (
-            <p>{data && data[0].body}</p>
-          ) : (
-            <p>{selectedPost?.body}</p>
-          )}
-        </div>
+        {loading && <div className="loading">A moment please...</div>}
+        {error && (
+          <div className="error">{`There is a problem in fetching blog post - ${error}`}</div>
+        )}
+        {data && (
+          <div className="main-blog">
+            {!selectedPost ? (
+              <h1>{data && data[0].title}</h1>
+            ) : (
+              <h1>{selectedPost?.title}</h1>
+            )}
+            {!selectedPost ? (
+              <p>{data && data[0].body}</p>
+            ) : (
+              <p>{selectedPost?.body}</p>
+            )}
+          </div>
+        )}
       </div>
-      {loading && <div>A moment please...</div>}
-      {error && (
-        <div>{`There is a problem in fetching blog post - ${error}`}</div>
-      )}
 
       <div className="rdiv">
         <h1>Other Posts</h1>
         <ul className="blog-lists">
+          {loading && <div className="loading">A moment please...</div>}
+          {error && (
+            <div className="error">{`There is a problem in fetching blog post - ${error}`}</div>
+          )}
           {data &&
             data.map(({ id, title, body }) => (
               <li key={id} onClick={() => handleClick(id)}>
